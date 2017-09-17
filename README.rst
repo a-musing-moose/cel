@@ -1,6 +1,9 @@
 Cel
 ===
 
+.. image:: https://travis-ci.org/a-musing-moose/cel.svg?branch=master
+    :target: https://travis-ci.org/a-musing-moose/cel
+
 Cel is the first part of a simple Function as a Service (FaaS) framework. It provides a command line tool to start, build and run locally individual Python function apps.
 
 
