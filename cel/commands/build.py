@@ -27,6 +27,7 @@ def build(tag):
 @click.command()
 def build_runner():
     docker_dir = os.path.join(get_root_dir(), 'runner')
+    current = os.getcwd()
     os.chdir(docker_dir)
     cmd = [
         'docker',
@@ -36,3 +37,4 @@ def build_runner():
         '.',
     ]
     run(cmd, stdout=sys.stdout)
+    os.chdir(current)  # ensure we switch back to previous directory

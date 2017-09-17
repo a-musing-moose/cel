@@ -6,7 +6,7 @@ from .commands.start import start
 
 
 @click.group()
-def main():
+def main():  # pragma: nocover
     pass
 
 

@@ -45,10 +45,10 @@ def run(ctx, file, body, no_build, args):
         '--rm',
         config.image_name
     ]
-    with subprocess.Popen(
+    p = subprocess.Popen(
         cmd,
         stdin=subprocess.PIPE,
         stdout=sys.stdout,
         stderr=sys.stderr
-    ) as p:
-        p.communicate(input=json.dumps(payload).encode('utf8'))
+    )
+    p.communicate(input=json.dumps(payload).encode('utf8'))
