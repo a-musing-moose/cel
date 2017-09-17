@@ -18,7 +18,7 @@ Getting Started
 #. run ``pip install cel``
 #. Start an app using ``cel start <app_name>``
 
-This will create a folder named _<app_name>_ containing you new application
+This will create a folder named *<app_name>* containing you new application
 
 Usage
 -----
