@@ -1,0 +1,13 @@
+# These are the development requirements only
+
+# Testing
+pytest
+pytest-cov
+
+# Static analysis
+flake8
+isort
+
+
+# Publishing
+twine
