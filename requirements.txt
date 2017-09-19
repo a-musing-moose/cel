@@ -1,4 +1,6 @@
-# These are the development requirements only
+# Install the cel package itself
+-e .
+
 
 # Testing
 pytest
