@@ -1,3 +1,3 @@
 FROM cel/runner
 COPY . /app
-CMD /venv/bin/pip install /app/requirements.txt
+RUN /venv/bin/pip install -r /app/requirements.txt
