@@ -17,21 +17,22 @@ from .build import build
 @click.argument('args', nargs=-1, type=click.UNPROCESSED)
 @click.pass_context
 def run(ctx, file, body, no_build, args):
+    """Run a cel locally"""
     if not no_build:
         ctx.invoke(build)
     payload = {}
     if file:
         try:
-            payload = json.load(file.read())
+            payload = json.load(file)
         except json.JSONDecodeError:
-            print("That is not a valid JSON file")
+            click.secho("That is not a valid JSON file", fg='red')
             sys.exit(1)
 
     if body:
         try:
             payload = json.loads(body)
         except json.JSONDecodeError:
-            print(f"{body} is not a valid JSON string")
+            click.secho(f"{body} is not a valid JSON string", fg='red')
             sys.exit(1)
 
     if args:

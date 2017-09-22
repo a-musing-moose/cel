@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 import sys
@@ -24,9 +25,10 @@ from ..utils import get_root_dir, list_templates
     help='What template to build from'
 )
 def start(name, force, template):
+    """Start a new cel"""
     if os.path.exists(name):
         if not force:
-            print(f"the folder {name} already exists")
+            click.secho(f"The folder '{name}' already exists", fg='red')
             sys.exit(1)
     else:
         os.makedirs(name)
@@ -39,13 +41,21 @@ def start(name, force, template):
             os.makedirs(dst_dir)
         for file_ in files:
             src_file = os.path.join(src_dir, file_)
-            dst_file = os.path.join(dst_dir, file_)
-            if os.path.exists(dst_file):
-                os.remove(dst_file)
             shutil.copy(src_file, dst_dir)
 
-    config_path = os.path.join(name, 'config.ini')
+    config_path = os.path.join(name, 'cel.json')
     with open(config_path, 'w') as f:
-        f.write('[app]\n')
-        f.write('repository=cel\n')
-        f.write(f'name={name}\n')
+        json.dump({
+            "app": {
+                "repository": "cel",
+                "name": name
+            }
+        }, f, indent=2)
+
+
+@click.command()
+def templates():
+    """List available templates"""
+    click.secho("available templates:")
+    for name in list_templates():
+        click.secho("\t- {}".format(name), bold=True)

@@ -1,6 +1,8 @@
 import os
 import sys
 
+import click
+
 from .config import Config
 from .exceptions import ConfigNotFound
 
@@ -16,7 +18,7 @@ def list_templates():
 
 def get_app_config():
     try:
-        return Config.from_ini('config.ini')
+        return Config.from_file('cel.json')
     except ConfigNotFound:
-        print("Cannot locate application config.ini")
+        click.secho("Cannot locate application config file (cel.json)", fg='red')
         sys.exit(1)

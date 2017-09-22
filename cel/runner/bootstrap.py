@@ -14,18 +14,18 @@ def get_entry_point():
         module = import_module(ENTRY_POINT_MODULE)
     except ModuleNotFoundError as e:
         sys.stdout.write('{"error":"no entry point module found"}\n')
-        sys.exit(1)
+        sys.exit(2)
 
     try:
         return getattr(module, ENTRY_POINT)
     except AttributeError:
         sys.stdout.write('{"error":"entry point missing"}')
-        sys.exit(1)
+        sys.exit(3)
 
 
 def timeout(sig_num, frame):
     """Handles exiting if a timeout alarm is raised"""
-    sys.stdout.write('{"error":"stdin timeout"}')
+    sys.stdout.write('{"error":"input timeout"}')
     sys.exit(1)
 
 
@@ -51,4 +51,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    run()  # pragma: nocover

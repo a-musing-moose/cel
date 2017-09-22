@@ -3,7 +3,6 @@ import sys
 from click.testing import CliRunner
 
 from cel.commands import build
-from cel.config import Config
 
 
 def test_build_runner(monkeypatch):
@@ -22,40 +21,34 @@ def test_build_runner(monkeypatch):
     assert result.exit_code == 0
 
 
-def test_build(monkeypatch):
+def test_build(monkeypatch, config):
     def mock_run(cmd):
         assert cmd == [
             'docker',
             'build',
             '-t',
-            'cel/test',
+            'test_repo/test_name',
             '.'
         ]
     monkeypatch.setattr('cel.commands.build.run', mock_run)
-
-    def mock_get_app_config():
-        return Config('cel', 'test')
-    monkeypatch.setattr('cel.commands.build.get_app_config', mock_get_app_config)
+    monkeypatch.setattr('cel.commands.build.get_app_config', lambda: config)
 
     runner = CliRunner()
     result = runner.invoke(build.build)
     assert result.exit_code == 0
 
 
-def test_build_with_tag(monkeypatch):
+def test_build_with_tag(monkeypatch, config):
     def mock_run(cmd):
         assert cmd == [
             'docker',
             'build',
             '-t',
-            'cel/test:0.0.1',
+            'test_repo/test_name:0.0.1',
             '.'
         ]
     monkeypatch.setattr('cel.commands.build.run', mock_run)
-
-    def mock_get_app_config():
-        return Config('cel', 'test')
-    monkeypatch.setattr('cel.commands.build.get_app_config', mock_get_app_config)
+    monkeypatch.setattr('cel.commands.build.get_app_config', lambda: config)
 
     runner = CliRunner()
     result = runner.invoke(build.build, ['-t', '0.0.1'])
@@ -64,7 +57,7 @@ def test_build_with_tag(monkeypatch):
     assert result.exit_code == 0
 
 
-def test_build_exits_when_inifile_not_found():
+def test_build_exits_when_file_not_found():
     runner = CliRunner()
     result = runner.invoke(build.build)
     assert result.exit_code == 1

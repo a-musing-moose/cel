@@ -19,19 +19,10 @@ def test_list_templates():
     assert utils.list_templates() == ['default']
 
 
-def test_config_loading(tmpdir):
-    directory = tmpdir.mkdir('testing')
-    old_dir = directory.chdir()
-    f = directory.join('config.ini')
-    f.write((
-        '[app]\n'
-        'repository=cel\n'
-        'name=app_name'
-    ))
+def test_config_loading(config_file):
     config = utils.get_app_config()
-    old_dir.chdir()
-    assert config.repository == 'cel'
-    assert config.name == 'app_name'
+    assert config.repository == 'test_repo'
+    assert config.name == 'test_name'
 
 
 def test_config_load_when_file_not_present():
